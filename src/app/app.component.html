@@ -1,0 +1,45 @@
+<div class="body">
+  <h1>
+    How much would you like to purchase?
+  </h1>
+  <div>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Currency I want" #currentValue>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select (selectionChange)="onChange($event.value)" placeholder="All currencies" [(value)]="selectedDefaultCurrency"
+        #firstCurrencyValue>
+        <mat-option *ngFor="let rate of firstCurrency" [value]="rate.currency">
+          {{rate.currency}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="exchangeRates">
+    <span>{{exchangeRatesData}}</span>
+  </div>
+  <div>
+    <button class="swapIcon" mat-mini-fab (click)="swapCurrencies(firstCurrencyValue.value, secondCurrencyValue.value)"><i
+        class="material-icons">
+        swap_vert
+      </i></button>
+    <span class="swapSpan">Swap</span>
+  </div>
+  <div>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Currency I have" [value]="finalResult | number : '1.2-2'">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="All currencies" [(value)]="selectedSecondCurrency" #secondCurrencyValue>
+        <mat-option *ngFor="let rate of secondCurrency" [value]="rate">
+          {{rate.currency}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <button mat-stroked-button class="resetButton" (click)="refresh()">Reset</button>
+    <button mat-stroked-button class="calculateButton" (click)="calculateCurrencies(secondCurrencyValue.value, currentValue.value)">Calculate</button>
+  </div>
+</div>
+<router-outlet></router-outlet>
